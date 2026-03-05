@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WhatsApp Random Sender</title>
+</head>
+<body>
+  <h2>WhatsApp Random Bulk Sender</h2>
+
+  <button onclick="checkStatus()">Check Status</button>
+  <p id="status"></p>
+
+  <p>
+    <a href="/qr" target="_blank">Open QR Page</a>
+  </p>
+
+  <form action="/send" method="POST" enctype="multipart/form-data">
+    <p>
+      Numbers File (.txt):<br />
+      <input type="file" name="numbersFile" required />
+    </p>
+
+    <p>
+      Messages File (.txt):<br />
+      <input type="file" name="messagesFile" required />
+    </p>
+
+    <p>
+      Image (Optional):<br />
+      <input type="file" name="image" />
+    </p>
+
+    <p>
+      Min Delay (ms):<br />
+      <input type="number" name="minDelay" value="8000" />
+    </p>
+
+    <p>
+      Max Delay (ms):<br />
+      <input type="number" name="maxDelay" value="20000" />
+    </p>
+
+    <button type="submit">Start Sending</button>
+  </form>
+
+  <script>
+    async function checkStatus() {
+      const res = await fetch("/status");
+      const data = await res.json();
+      document.getElementById("status").innerText =
+        data.ready ? "Connected ✅" : "Not Connected ❌";
+    }
+  </script>
+</body>
+</html>
